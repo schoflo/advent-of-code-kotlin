@@ -7,8 +7,10 @@ class Three {
         @JvmStatic
         fun main(args: Array<String>) {
             println("----")
+            val path = "C:\\Entwicklung\\intellij_projects\\advent-of-code-kotlin\\src\\three\\input.txt"
+//            val path = "C:\\Entwicklung\\intellij_projects\\advent-of-code-kotlin\\src\\three\\test.txt"
             val input: String =
-                File("C:\\Entwicklung\\intellij_projects\\advent-of-code-kotlin\\src\\main\\kotlin\\three\\input.txt").inputStream()
+                File(path).inputStream()
                     .readBytes().toString(Charsets.UTF_8)
 //            one(input)
             two(input)
@@ -35,25 +37,18 @@ class Three {
 
             do {
                 if (alternate) {
-                    print("alternate: ")
-                    val splitArray = newInput.split("""don't\(\)""".toRegex()).toTypedArray()
+                    val splitArray = newInput.split("""(?=don't\(\))""".toRegex()).toTypedArray()
                     println(splitArray[0])
                     sum += mulSumOfString(splitArray[0])
-                    println("----")
                     newInput = splitArray.sliceArray(1 until splitArray.size).joinToString("")
                 } else {
-                    print("!alternate: ")
-                    val splitArray = newInput.split("""do\(\)""".toRegex()).toTypedArray()
-                    println(splitArray[0])
-                    println("----")
+                    val splitArray = newInput.split("""(?=do\(\))""".toRegex()).toTypedArray()
                     newInput = splitArray.sliceArray(1 until splitArray.size).joinToString("")
-//                    println("newinput")
-                    println(newInput)
                 }
                 alternate = !alternate
             } while (newInput.isNotEmpty())
 
-            println(sum)
+            println("Ergebnis:$sum")
 
         }
 
